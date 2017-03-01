@@ -42,16 +42,18 @@ DNA * new_dna(short int length) {
 }
 
 double calc_dna_fitness(DNA * dna, char * target) {
-  double fitness = 0;
+  int count = 0;
   int i;
 
   for (i = 0; i < dna->length; ++i) {
     if (dna->genes[i] == *(target + i))
-      ++fitness;
+      ++count;
   }
 
-  dna->fitness = fitness;
-  return fitness;
+  dna->fitness = ((double) count) / ((double) dna->length);
+  dna->fitness = pow(dna->fitness, 1.0);
+
+  return dna->fitness;
 }
 
 DNA * crossover(DNA * dna_a, DNA * dna_b) {
@@ -66,7 +68,9 @@ DNA * crossover(DNA * dna_a, DNA * dna_b) {
 
   dna_c = new_dna(dna_a->length);
 
-  midpoint = floor(random_at_most(dna_a->length));
+  //midpoint = floor(random_at_most(dna_a->length));
+  midpoint = dna_a->length / 2;
+
   for (i = 0; i < dna_a->length; ++i) {
     if (i > midpoint)
       dna_c->genes[i] = dna_a->genes[i];
@@ -93,7 +97,7 @@ void print_dna(DNA * dna, int verbose) {
   printf("%s", dna->genes);
 
   if (verbose)
-    printf(" (fitness = %d)\n", dna->fitness);
+    printf(" (fitness = %.2f%%)\n", dna->fitness);
   else
     printf("\n");
 }

@@ -1,6 +1,7 @@
 #include "simulation.h"
 
-DNA * accept_reject(Simulation * simulation, int max_fitness) {
+DNA * accept_reject(Simulation * simulation, double max_fitness) {
+  int max_fitness_int = max_fitness * 100;
   int index;
   int r;
   int safe;
@@ -12,8 +13,8 @@ DNA * accept_reject(Simulation * simulation, int max_fitness) {
     index = floor(random_at_most(POPULATION_MAX));
     dna = simulation->population[index];
 
-    r = random_at_most(max_fitness);
-    if (r <= dna->fitness)
+    r = random_at_most(max_fitness_int);
+    if (r <= (int) (dna->fitness * 100.0))
       return dna;
 
     ++safe;
@@ -63,7 +64,7 @@ Population * new_population(Simulation * simulation) {
 }
 
 void generate(Simulation * simulation) {
-  int max_fitness;
+  double max_fitness;
   int i;
 
   DNA * dna_a = NULL;
@@ -108,7 +109,6 @@ int evaluate(Simulation * simulation) {
     }
   }
 
-  max_fitness /= simulation->nb_chars;
   if (max_fitness >= PERFECT_SCORE)
     simulation->finished = 1;
 
@@ -127,7 +127,7 @@ void print_population(Population * population, int verbose) {
 
 void print_best(Simulation * simulation, int verbose) {
   if (verbose == 1)
-    printf("%s (fitness = %f%%)\n", get_best(simulation), get_best_fitness(simulation));
+    printf("%s (fitness = %.2f%%)\n", get_best(simulation), get_best_fitness(simulation));
   else
     printf("%s\n", get_best(simulation));
 }

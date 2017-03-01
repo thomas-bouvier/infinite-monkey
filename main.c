@@ -7,18 +7,16 @@
 int main() {
   char * target;
   float mutation_rate;
-  short nb_chars;
 
   Simulation * simulation = NULL;
-  Population * population = NULL;
 
   srand(time(NULL));
 
-  target = "to be or not to be to be or not to be";
-  mutation_rate = 0.01;
+  target = "to be or not to be to be or not to be to be or not to be to be or not to be to be or not to be";
+  mutation_rate = 0.005;
 
   simulation = new_simulation(target, mutation_rate);
-  population = new_population(simulation);
+  new_population(simulation);
 
   while (is_finished(simulation) == 0) {
     generate(simulation);

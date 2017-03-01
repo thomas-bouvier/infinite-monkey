@@ -8,7 +8,7 @@
 typedef struct {
   char * genes;
   short int length;
-  int fitness;
+  double fitness;
 } DNA;
 
 DNA * new_dna(short int length);

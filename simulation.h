@@ -8,7 +8,7 @@
 
 #include "dna.h"
 
-#define POPULATION_MAX  1000
+#define POPULATION_MAX  2000
 #define PERFECT_SCORE   1
 
 typedef DNA * Population;
@@ -31,7 +31,7 @@ void generate(Simulation * simulation);
 void calc_fitness(Simulation * simulation);
 int evaluate(Simulation * simulation);
 
-DNA * accept_reject(Simulation * simulation, int max_fitness);
+DNA * accept_reject(Simulation * simulation, double max_fitness);
 
 void print_population(Population * population, int verbose);
 void print_best(Simulation * simulation, int verbose);

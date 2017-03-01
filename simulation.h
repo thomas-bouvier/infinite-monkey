@@ -24,7 +24,7 @@ typedef struct Simulation {
   double best_fitness;
 } Simulation;
 
-Simulation * new_simulation(char * target, short int nb_chars, float mutation_rate);
+Simulation * new_simulation(char * target, float mutation_rate);
 Population * new_population(Simulation * simulation);
 
 void generate(Simulation * simulation);

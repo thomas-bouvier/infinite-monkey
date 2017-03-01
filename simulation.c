@@ -24,7 +24,7 @@ DNA * accept_reject(Simulation * simulation, int max_fitness) {
   }
 }
 
-Simulation * new_simulation(char * target, short int nb_chars, float mutation_rate) {
+Simulation * new_simulation(char * target, float mutation_rate) {
   Simulation * simulation = NULL;
 
   if ((simulation = (Simulation *) malloc(sizeof(Simulation))) == (Simulation *) NULL) {
@@ -33,7 +33,7 @@ Simulation * new_simulation(char * target, short int nb_chars, float mutation_ra
   }
 
   simulation->target = target;
-  simulation->nb_chars = nb_chars;
+  simulation->nb_chars = strlen(target);
   simulation->mutation_rate = mutation_rate;
 
   simulation->generations = 0;
@@ -108,12 +108,12 @@ int evaluate(Simulation * simulation) {
     }
   }
 
-  simulation->best = simulation->population[index]->genes;
-  simulation->best_fitness = max_fitness;
-
-  max_fitness /= 40;
+  max_fitness /= simulation->nb_chars;
   if (max_fitness >= PERFECT_SCORE)
     simulation->finished = 1;
+
+  simulation->best = simulation->population[index]->genes;
+  simulation->best_fitness = max_fitness * 100;
 
   return simulation->finished;
 }
@@ -127,7 +127,7 @@ void print_population(Population * population, int verbose) {
 
 void print_best(Simulation * simulation, int verbose) {
   if (verbose == 1)
-    printf("%s (fitness = %f)\n", get_best(simulation), get_best_fitness(simulation));
+    printf("%s (fitness = %f%%)\n", get_best(simulation), get_best_fitness(simulation));
   else
     printf("%s\n", get_best(simulation));
 }

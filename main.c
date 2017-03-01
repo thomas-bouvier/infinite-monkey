@@ -14,28 +14,18 @@ int main() {
 
   srand(time(NULL));
 
-  target = "j aime l electronique mais pas le prof";
-  mutation_rate = 0.5;
-  nb_chars = 40;
+  target = "to be or not to be to be or not to be";
+  mutation_rate = 0.01;
 
-  simulation = new_simulation(target, nb_chars, mutation_rate);
+  simulation = new_simulation(target, mutation_rate);
   population = new_population(simulation);
 
   while (is_finished(simulation) == 0) {
-    /*
-    printf("\n");
-    printf("===========================================\n");
-    printf("-------------------------------------------\n");
-    printf("Generation %d\n", simulation->generations);
-    printf("-------------------------------------------\n");
-    */
-
     generate(simulation);
     calc_fitness(simulation);
     evaluate(simulation);
 
-    printf("%d\n", simulation->generations);
-    //print_population(simulation->population, 1);
+    printf("\nGeneration %d\n", simulation->generations);
     print_best(simulation, 1);
   }
 
